@@ -102,17 +102,13 @@ if __name__ == "__main__":
                             "答": ''.join(a)
                         }
                         qa_list.append(my_qa)
-    
-    filename = 'awsqa.csv'
-    
+    #根据需要指定存放的路径
+    filename = 'awsqa.csv'   
     with open(filename, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
     
         for row in qa_list:
-            writer.writerow([f"{key}:{value}\n" for key,value in row.items()])
-    
-    print("csv创建成功")
-    
-    
+            writer.writerow([f"{key}:{value}\n" for key,value in row.items()])    
+    print("csv创建成功")  
     # 调用函数，示例中移除了几个常见的特殊字符
     remove_special_characters('awsqa.csv', ['":', '","', '"'])
