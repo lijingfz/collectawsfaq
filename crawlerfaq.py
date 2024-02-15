@@ -77,42 +77,42 @@ def remove_special_characters(filename, special_characters):
     with open(filename, 'w', encoding='utf-8') as file:
         file.write(content)
 
-
-url = "https://aws.amazon.com/cn/ec2/faqs/"  # EC2
-url1 = "https://aws.amazon.com/cn/faqs/"  # 遍历获得所有服务Faqs的链接
-enurl = "https://aws.amazon.com/faqs/"
-faqs_url = get_all_faq(url1)
-
-qa_list = []
-
-for title, full_url, flag in faqs_url:
-    pattern = 'faq'
-    if re.findall(pattern, full_url):
-        # 以EC2 FAQs 为例
-        if full_url == url:
-            print('Title:', title)
-            print('Faqs link:', full_url)
-            print('Faqs flag:', flag)
-            faqs = fetch_aws_faq(full_url)
-            for q, a in faqs:
-                my_qa = {}
-                if q is not None:
-                    my_qa = {
-                        "": q,
-                        "答": ''.join(a)
-                    }
-                    qa_list.append(my_qa)
-
-filename = 'awsqa.csv'
-
-with open(filename, 'w', newline='', encoding='utf-8') as file:
-    writer = csv.writer(file)
-
-    for row in qa_list:
-        writer.writerow([f"{key}:{value}\n" for key,value in row.items()])
-
-print("csv创建成功")
-
-
-# 调用函数，示例中移除了几个常见的特殊字符
-remove_special_characters('awsqa.csv', ['":', '","', '"'])
+if __name__ == "__main__":
+    url = "https://aws.amazon.com/cn/ec2/faqs/"  # EC2
+    url1 = "https://aws.amazon.com/cn/faqs/"  # 遍历获得所有服务Faqs的链接
+    enurl = "https://aws.amazon.com/faqs/"
+    faqs_url = get_all_faq(url1)
+    
+    qa_list = []
+    
+    for title, full_url, flag in faqs_url:
+        pattern = 'faq'
+        if re.findall(pattern, full_url):
+            # 以EC2 FAQs 为例
+            if full_url == url:
+                print('Title:', title)
+                print('Faqs link:', full_url)
+                print('Faqs flag:', flag)
+                faqs = fetch_aws_faq(full_url)
+                for q, a in faqs:
+                    my_qa = {}
+                    if q is not None:
+                        my_qa = {
+                            "": q,
+                            "答": ''.join(a)
+                        }
+                        qa_list.append(my_qa)
+    
+    filename = 'awsqa.csv'
+    
+    with open(filename, 'w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+    
+        for row in qa_list:
+            writer.writerow([f"{key}:{value}\n" for key,value in row.items()])
+    
+    print("csv创建成功")
+    
+    
+    # 调用函数，示例中移除了几个常见的特殊字符
+    remove_special_characters('awsqa.csv', ['":', '","', '"'])
