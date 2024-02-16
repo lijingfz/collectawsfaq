@@ -1,0 +1,77 @@
+{"openapi": "3.0.0",
+    "info": {
+        "title": "Create AWS Support case API",
+        "version": "1.0.0",
+        "description": "API for creating new AWS support case."
+    },
+    "paths": {
+        "/create-case": {
+            "post": {
+                "summary": "Create a new AWS support case",
+                "description": "Create a new aws support case, then update the database with the new case. Return the newly created case ID.",
+                "operationId": "createCase",
+                "parameters": [{
+                    "name": "service",
+                    "in": "path",
+                    "description": "对应AWS服务类别代码",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                },
+                {
+                    "name": "category",
+                    "in": "path",
+                    "description": "对应AWS服务类别下的分类代码",
+                    "required": true,
+                    "schema": {
+                      "type": "string",
+                      "default":"other"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "in": "path",
+                    "description": "简单描述故障现象",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                },
+                {
+                    "name": "severity",
+                    "in": "path",
+                    "description": "故障级别",
+                    "required": true,
+                    "schema": {
+                      "type": "string",
+                      "default":"low"
+                    }
+                }
+            ],
+                "responses": {
+                    "200": {
+                        "description": "Creates a AWS support case for customer issue.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "caseId": {
+                                            "type": "string",
+                                            "description": "Unique ID of the aws support case."
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "description": "The status of the new case. Case can be in Open state."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
